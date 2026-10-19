@@ -1,0 +1,300 @@
+/* ============ 打卡小票样式 ============ */
+
+/* 小票遮罩层 */
+.ticket-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease);
+}
+
+.ticket-overlay.ticket-show {
+  opacity: 1;
+}
+
+/* 小票容器 */
+.ticket-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 420px;
+  width: 100%;
+  animation: ticketSlideIn 0.5s var(--ease);
+}
+
+@keyframes ticketSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 小票主体 */
+.ticket {
+  background: var(--surface);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  position: relative;
+  transition: transform 0.3s var(--ease);
+}
+
+.ticket::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--accent-soft) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* 小票上部 - 励志语录 */
+.ticket-top {
+  padding: 40px 30px;
+  text-align: center;
+  position: relative;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ticket-decoration {
+  width: 40px;
+  height: 2px;
+  background: var(--accent);
+  margin: 16px 0;
+  border-radius: 2px;
+  opacity: 0.5;
+}
+
+.ticket-quote {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  max-width: 32ch;
+}
+
+/* 虚线分割 */
+.ticket-perforation {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 4px;
+  background: var(--line);
+  height: 1px;
+  position: relative;
+}
+
+.ticket-perforation span {
+  width: 8px;
+  height: 8px;
+  background: var(--bg);
+  border-radius: 50%;
+  margin-top: -3.5px;
+}
+
+/* 小票下部 - 数据 */
+.ticket-bottom {
+  padding: 30px;
+  text-align: center;
+  background: var(--surface-2);
+}
+
+.ticket-date {
+  font-size: 13px;
+  color: var(--text-3);
+  font-weight: 600;
+  margin-bottom: 16px;
+  letter-spacing: 0.05em;
+}
+
+.ticket-weight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.ticket-weight-label {
+  font-size: 12px;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 650;
+}
+
+.ticket-weight-value {
+  font-size: 36px;
+  font-weight: 650;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+}
+
+.ticket-weight-value span {
+  font-size: 16px;
+  color: var(--text-3);
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+.ticket-weight-placeholder {
+  font-size: 13px;
+  color: var(--text-3);
+  font-style: italic;
+}
+
+/* 操作按钮 */
+.ticket-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.ticket-actions .btn {
+  flex: 1;
+}
+
+/* 撕下动画 */
+.ticket-tearing {
+  animation: tearAway 0.6s var(--ease) forwards;
+}
+
+@keyframes tearAway {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(3deg);
+  }
+  100% {
+    transform: translateY(-100vh) rotate(5deg);
+    opacity: 0;
+  }
+}
+
+/* 小票库 */
+.ticket-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.ticket-gallery-item {
+  cursor: pointer;
+  transition: transform 0.2s var(--ease);
+}
+
+.ticket-gallery-item:active {
+  transform: scale(0.97);
+}
+
+.ticket-mini {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.ticket-mini .ticket-quote {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text);
+  font-weight: 600;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ticket-mini-date {
+  font-size: 10px;
+  color: var(--text-3);
+  margin-top: 12px;
+  font-weight: 650;
+  letter-spacing: 0.05em;
+}
+
+/* 3.3.8 响应式适配 */
+@media (max-width: 480px) {
+  .ticket-container {
+    max-width: 100%;
+  }
+  
+  .ticket-top {
+    padding: 32px 24px;
+    min-height: 180px;
+  }
+  
+  .ticket-quote {
+    font-size: 18px;
+  }
+  
+  .ticket-bottom {
+    padding: 24px;
+  }
+  
+  .ticket-weight-value {
+    font-size: 32px;
+  }
+  
+  .ticket-actions {
+    flex-direction: column;
+  }
+  
+  .ticket-gallery {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 10px;
+  }
+}
+
+/* 横屏适配 */
+@media (max-height: 600px) and (orientation: landscape) {
+  .ticket-top {
+    padding: 24px;
+    min-height: auto;
+  }
+  
+  .ticket-quote {
+    font-size: 16px;
+  }
+  
+  .ticket-bottom {
+    padding: 20px;
+  }
+}
+
+/* 3.3.9 夜间模式适配 */
+html[data-theme="dark"] .ticket {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+html[data-theme="dark"] .ticket::before {
+  background: linear-gradient(135deg, var(--accent-soft) 0%, transparent 60%);
+}
+
+html[data-theme="dark"] .ticket-perforation span {
+  background: var(--bg);
+  box-shadow: 0 0 0 1px var(--line);
+}
+
+html[data-theme="dark"] .ticket-overlay {
+  background: rgba(0, 0, 0, 0.85);
+}
