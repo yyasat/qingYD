@@ -2,6 +2,9 @@
 /* ============================================================
    导航 / 弹层 / Toast
    ============================================================ */
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+
 const VIEWS=[
   {id:'v-today',ic:'today',n:'今日'},
   {id:'v-cal',ic:'cal',n:'日历'},
